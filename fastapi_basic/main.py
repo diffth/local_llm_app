@@ -18,5 +18,10 @@ def read_root():
 # http://127.0.0.1:8000/items/3
 # http://127.0.0.1:8000/items/4
 @app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None):
+def read_item(item_id : int, q: str | None = None):
+    print(f"item_id : {item_id}, q : {q}")
     return {"item_id": item_id, "q": q}
+
+# @app.get("/items/{item_id}")
+# def read_item(item_id: int, q: str | None = None):
+#     return {"item_id": item_id, "q": q}

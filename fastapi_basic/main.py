@@ -1,6 +1,44 @@
+from typing import Optional
+
 from fastapi import FastAPI
+from pydantic import BaseModel, HttpUrl
 
 app = FastAPI()
+
+# 요청 모델
+class UserCreate(BaseModel):
+    name: str
+    password: str
+    avatar_url: Optional[HttpUrl] = None
+    
+# 응답 모델
+class UserResponse(BaseModel):
+    name: str
+    avatar_url: Optional[HttpUrl] = None
+
+
+@app.post("/user_info", response_model=UserResponse)
+def get_user(user: UserCreate):
+    # 비즈니스 로직 처리
+    # DB 저장 처리
+    print("user: ", user)
+    user_info = UserResponse(
+        name=user.name,
+        avatar_url=user.avatar_url
+    )
+    # Pydantic model 객체를 JSON으로 직렬화해서 응답함.
+    return user_info
+
+
+class UserCreate(BaseModel):
+    name: str
+    password: str
+    avatar_url: Optional[HttpUrl] = None
+
+@app.post("/user_info")
+def create_user(user: UserCreate):
+    return user
+
 
 # http://127.0.0.1:8000/
 @app.get("/")

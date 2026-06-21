@@ -30,14 +30,10 @@ def get_user(user: UserCreate):
     return user_info
 
 
-class UserCreate(BaseModel):
-    name: str
-    password: str
-    avatar_url: Optional[HttpUrl] = None
 
-@app.post("/user_info")
-def create_user(user: UserCreate):
-    return user
+# @app.post("/user_info")
+# def create_user(user: UserCreate):
+#     return user
 
 
 # http://127.0.0.1:8000/

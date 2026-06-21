@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from env.db_env  import user, password, host, db_name 
+#from env.db_env  import user, password, host, db_name 
 
 #####################
 # sqlite3 엔진을 정의, DB파일 todo.sqlite3

@@ -1,4 +1,5 @@
 # 실습 : image to text
+# mac에서만 지원함(2026.06.21 기준)
 import ollama
 
 response = ollama.chat(

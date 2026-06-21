@@ -26,9 +26,9 @@ import pygame
 # 기본 설정
 # =========================
 
-OLLAMA_MODEL = "exaone3.5:7.8b"
+# OLLAMA_MODEL = "exaone3.5:7.8b"
 # 테스트가 무거우면 아래 모델로 먼저 확인
-# OLLAMA_MODEL = "llama3.2:3b"
+OLLAMA_MODEL = "emma4:e4b"
 
 AUDIO_FILE = Path("./voice/voice1.mp3")
 OUTPUT_TTS_FILE = Path("./voice/answer.mp3")

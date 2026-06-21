@@ -20,3 +20,4 @@ except requests.exceptions.HTTPError as e:
     print(f"HTTP 오류가 발생했습니다: {e}")
 except Exception as e:
     print(f"알 수 없는 오류가 발생했습니다: {e}")
+

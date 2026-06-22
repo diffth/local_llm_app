@@ -13,10 +13,11 @@ function UseEffectRender() {
   //     .then((response) => response.json())
   //     .then((data) => setModels(data.models || []))
   //     .catch((error) => console.error(error));
-  //   }, []);
+  //   }, []); // [] 처음 한번만 실행하는 장치
 
   // axios 라이브러리 사용하기
   // npm install axios
+  
   useEffect(() => {
     axios
       .get(URL)
@@ -37,25 +38,16 @@ function UseEffectRender() {
         ))}
       </ul>
       <hr />
-      <select
-        value={selectedModel}
-        onChange={(event) => setSelectedModel(event.target.value)}
-      >
+      <select value={selectedModel}
+        onChange={(event) => setSelectedModel(event.target.value)}>
         <option value="">모델을 선택하세요</option>
-
         {models.map((model) => (
-          <option key={model} value={model}>
-            {model}
-          </option>
+          <option key={model} value={model}>{model}</option>
         ))}
       </select>
-
       <p>선택한 모델: {selectedModel}</p>
-
     </div>
   )
 }
 
 export default UseEffectRender
-
-

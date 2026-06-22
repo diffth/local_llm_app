@@ -3,6 +3,8 @@ import Greeting from "./components/Greeting"
 import Counter from "./components/Counter";
 import InputState from "./components/InputState";
 import ListRender from "./components/ListRender";
+import ConditionalRender from "./components/ConditionalRender";
+import UseEffectRender from "./components/UseEffectRender";
 
 function App() {
   return (
@@ -12,6 +14,9 @@ function App() {
       <Counter />
       <InputState />
       <ListRender />
+      <hr />
+      <ConditionalRender />
+      <UseEffectRender />
     </div>
   );
 }

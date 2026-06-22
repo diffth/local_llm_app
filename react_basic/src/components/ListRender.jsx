@@ -4,6 +4,8 @@ function ListRender() {
     const messages = [
         { id: 1, role: "user", content: "안녕하세요." },
         { id: 2, role: "assistant", content: "무엇을 도와드릴까요?" },
+        { id: 3, role: "user", content: "로컬 LLM에 대해 알려줘" },
+        { id: 4, role: "assistant", content: "로컬 llm~~~~" },
     
     ]
     return (

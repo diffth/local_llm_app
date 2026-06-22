@@ -10,6 +10,8 @@ import OllamaChat from "./components/OllamaChat";
 function App() {
   return (
     <div>
+      <UseEffectRender />
+      <OllamaChat />
       <Header />
       <Greeting />
       <Counter />
@@ -18,7 +20,6 @@ function App() {
       <hr />
       <ConditionalRender />
       <UseEffectRender />
-      <OllamaChat />
     </div>
   );
 }

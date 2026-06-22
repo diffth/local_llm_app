@@ -2,6 +2,7 @@
 // useState는 컴포넌트 안에서 변하는 값, 즉 상태(state)를 관리할 때 사용한다.
 import { useState } from "react";
 
+
 // HTTP 요청을 보내기 위한 axios 라이브러리를 가져온다.
 // 여기서는 FastAPI 백엔드의 /chat API를 호출할 때 사용한다.
 import axios from "axios";
@@ -12,6 +13,7 @@ const CHAT_URL = "http://localhost:8000/chat";
 
 // Ollama 채팅 화면을 담당하는 React 컴포넌트이다.
 function OllamaChat() {
+
   // 사용자가 textarea에 입력한 메시지를 저장하는 상태이다.
   // 초기값은 빈 문자열이다.
   const [message, setMessage] = useState("");

@@ -1,6 +1,8 @@
 import Header from "./components/Header";
 import Greeting from "./components/Greeting"
 import Counter from "./components/Counter";
+import InputState from "./components/InputState";
+import ListRender from "./components/ListRender";
 
 function App() {
   return (
@@ -8,6 +10,8 @@ function App() {
       <Header />
       <Greeting />
       <Counter />
+      <InputState />
+      <ListRender />
     </div>
   );
 }

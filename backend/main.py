@@ -1,7 +1,8 @@
 from fastapi import FastAPI, HTTPException
 
 # ollama chat 모듈의 call_ollama_chat 함수 로딩
-from ollama_chat import call_ollama_chat
+from ollama_chat import call_ollama_chat, get_ollama_models
+from schemas import ChatRequest, ChatResponse
 
 # FastAPI 객체 생성
 app = FastAPI(
@@ -40,3 +41,14 @@ def chat(request: ChatRequest):
             detail=f"채팅 처리 중 오류가 발생했습니다: {exc}"
         ) 
 
+# model 목록 가져오기
+@app.get("/models")
+def list_models():
+    try:
+        models = get_ollama_models()
+        return {"models": models}
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"모델 목록 조회 중 오류가 발생했습니다: {exc}"
+        )

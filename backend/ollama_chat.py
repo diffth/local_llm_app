@@ -1,6 +1,8 @@
 import time
 from ollama import chat
+import requests
 
+OLLAMA_TAGS_URL = "http://localhost:11434/api/tags"
 
 def call_ollama_chat(
     message: str,
@@ -42,6 +44,20 @@ def call_ollama_chat(
         "elapsed_time": elapsed_time,
     }
 
+# 로컬 모델 목록 가져오기
+def get_ollama_models():
+    """Ollama에서 사용 가능한 모델 목록을 반환한다."""
+
+    response = requests.get(
+        OLLAMA_TAGS_URL,
+        timeout=30
+    )
+    response.raise_for_status()
+
+    data = response.json()
+    models = data.get("models", [])
+
+    return [model["name"] for model in models]
 
 if __name__ == "__main__":
     print(__name__)

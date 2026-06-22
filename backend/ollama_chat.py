@@ -2,7 +2,6 @@ import time
 from ollama import chat
 import requests
 
-OLLAMA_TAGS_URL = "http://localhost:11434/api/tags"
 
 def call_ollama_chat(
     message: str,
@@ -44,7 +43,10 @@ def call_ollama_chat(
         "elapsed_time": elapsed_time,
     }
 
+
 # 로컬 모델 목록 가져오기
+OLLAMA_TAGS_URL = "http://localhost:11434/api/tags"
+
 def get_ollama_models():
     """Ollama에서 사용 가능한 모델 목록을 반환한다."""
 

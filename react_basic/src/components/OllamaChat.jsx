@@ -2,7 +2,6 @@
 // useState는 컴포넌트 안에서 변하는 값, 즉 상태(state)를 관리할 때 사용한다.
 import { useState } from "react";
 
-
 // HTTP 요청을 보내기 위한 axios 라이브러리를 가져온다.
 // 여기서는 FastAPI 백엔드의 /chat API를 호출할 때 사용한다.
 import axios from "axios";

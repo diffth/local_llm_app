@@ -10,7 +10,7 @@ import OllamaChat from "./components/OllamaChat";
 function App() {
   return (
     <div>
-      <UseEffectRender />
+      {/* <UseEffectRender /> */}
       <OllamaChat />
       <Header />
       <Greeting />

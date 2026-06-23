@@ -1,6 +1,6 @@
 // React의 useState Hook을 가져온다.
 // useState는 컴포넌트 안에서 변하는 값, 즉 상태(state)를 관리할 때 사용한다.
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // HTTP 요청을 보내기 위한 axios 라이브러리를 가져온다.
 // 여기서는 FastAPI 백엔드의 /chat API를 호출할 때 사용한다.
@@ -9,10 +9,10 @@ import axios from "axios";
 // 채팅 요청을 보낼 백엔드 API 주소를 상수로 정의한다.
 // FastAPI 서버가 localhost:8000에서 실행 중이어야 한다.
 const CHAT_URL = "http://localhost:8000/chat";
+const MODELS_URL = "http://localhost:8000/models";
 
 // Ollama 채팅 화면을 담당하는 React 컴포넌트이다.
 function OllamaChat() {
-
   // 사용자가 textarea에 입력한 메시지를 저장하는 상태이다.
   // 초기값은 빈 문자열이다.
   const [message, setMessage] = useState("");
@@ -28,6 +28,31 @@ function OllamaChat() {
 
   // 서버 요청 중 오류가 발생했을 때 화면에 보여줄 오류 메시지를 저장한다.
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Ollama 모델 목록
+  const [models, setModels] = useState([]);
+
+  // 사용자가 선택한 모델
+  const [selectedModel, setSelectedModel] = useState("");
+
+  // 컴포넌트가 처음 실행될 때 모델 목록을 가져온다.
+  useEffect(() => {
+    axios
+      .get(MODELS_URL)
+      .then((response) => {
+        const modelList = response.data.models || [];
+        setModels(modelList);
+
+        // 모델 목록이 있으면 첫 번째 모델을 기본 선택값으로 설정한다.
+        if (modelList.length > 0) {
+          setSelectedModel(modelList[0]);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setErrorMessage("모델 목록을 가져오는 중 오류가 발생했습니다.");
+      });
+  }, []);
 
   // 사용자가 전송 버튼을 클릭했을 때 실행되는 함수이다.
   const handleSend = async () => {
@@ -54,7 +79,9 @@ function OllamaChat() {
         message: message,
 
         // Ollama에서 사용할 모델명
-        model: "gemma4:e4b",
+
+        // model: "gemma4:e4b",
+        model: setSelectedModel,
 
         // 모델의 역할 또는 응답 스타일을 지정하는 시스템 프롬프트
         system_prompt: "너는 초보자를 돕는 AI 강사다.",
@@ -97,7 +124,25 @@ function OllamaChat() {
   return (
     <main className="app">
       <h1>Ollama Chat</h1>
+      {/* 모델 선택 영역 */}
+      <section>
+        <h2>모델 선택</h2>
+        <select
+          value={selectedModel}
+          onChange={(event) => setSelectedModel(event.target.value)}
+          disabled={isLoading}
+        >
+          <option value="">모델을 선택하세요</option>
 
+          {models.map((model) => (
+            <option key={model} value={model}>
+              {model}
+            </option>
+          ))}
+        </select>
+
+        <p>선택한 모델: {selectedModel}</p>
+      </section>
       {/* 사용자 입력 영역 */}
       <section>
         <textarea

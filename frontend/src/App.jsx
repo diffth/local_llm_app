@@ -6,6 +6,7 @@ import './App.css'
 function App() {
   const [models, setModels] = useState([])
   const [selectedModel, setSelectedModel] = useState('')
+  const [systemPrompt, setSystemPrompt] = useState('너는 초보자를 돕는 친절한 AI 강사다.')
   const [messages, setMessages] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [loading, setLoading] = useState(false)
@@ -56,7 +57,7 @@ function App() {
       const response = await sendChatMessage({
         message: userMessage.text,
         model: selectedModel,
-        system_prompt: '너는 초보자를 돕는 친절한 AI 강사다.',
+        system_prompt: systemPrompt,
         temperature: 0.7,
         top_p: 0.9,
         num_predict: 256,
@@ -86,9 +87,11 @@ function App() {
           models={models}
           loading={loading}
           inputValue={inputValue}
+          systemPrompt={systemPrompt}
           onInputChange={handleInputChange}
           onSubmit={handleSubmit}
           onChangeModel={handleModelChange}
+          onChangeSystemPrompt={(event) => setSystemPrompt(event.target.value)}
         />
         <div className="status-area">
           {errorMessage && <div className="error-message">{errorMessage}</div>}

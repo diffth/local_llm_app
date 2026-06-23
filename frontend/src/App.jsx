@@ -1,121 +1,103 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useEffect, useState } from 'react'
+import ChatWindow from './components/ChatWindow.jsx'
+import { fetchModels, sendChatMessage } from './api/chatApi.js'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [models, setModels] = useState([])
+  const [selectedModel, setSelectedModel] = useState('')
+  const [messages, setMessages] = useState([])
+  const [inputValue, setInputValue] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  useEffect(() => {
+    async function loadModels() {
+      try {
+        const modelList = await fetchModels()
+        setModels(modelList)
+        if (modelList.length > 0) {
+          setSelectedModel(modelList[0])
+        }
+      } catch (error) {
+        console.error(error)
+        setErrorMessage('모델 목록을 불러오지 못했습니다. 서버를 확인해주세요.')
+      }
+    }
+
+    loadModels()
+  }, [])
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value)
+  }
+
+  const handleModelChange = (event) => {
+    setSelectedModel(event.target.value)
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    if (!inputValue.trim() || !selectedModel) {
+      return
+    }
+
+    const userMessage = {
+      id: `user-${Date.now()}`,
+      sender: 'user',
+      text: inputValue.trim(),
+    }
+    setMessages((prev) => [...prev, userMessage])
+    setInputValue('')
+    setLoading(true)
+    setErrorMessage('')
+
+    try {
+      const response = await sendChatMessage({
+        message: userMessage.text,
+        model: selectedModel,
+        system_prompt: '너는 초보자를 돕는 친절한 AI 강사다.',
+        temperature: 0.7,
+        top_p: 0.9,
+        num_predict: 256,
+      })
+
+      const assistantMessage = {
+        id: `assistant-${Date.now()}`,
+        sender: 'assistant',
+        text: response.message,
+      }
+
+      setMessages((prev) => [...prev, assistantMessage])
+    } catch (error) {
+      console.error(error)
+      setErrorMessage('메시지 전송 중 오류가 발생했습니다. 다시 시도해주세요.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app-root">
+      <div className="app-shell">
+        <ChatWindow
+          messages={messages}
+          model={selectedModel}
+          models={models}
+          loading={loading}
+          inputValue={inputValue}
+          onInputChange={handleInputChange}
+          onSubmit={handleSubmit}
+          onChangeModel={handleModelChange}
+        />
+        <div className="status-area">
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {!errorMessage && !models.length && (
+            <div className="loading-message">모델을 불러오는 중입니다...</div>
+          )}
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      </div>
+    </div>
   )
 }
 

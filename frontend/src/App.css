@@ -118,7 +118,8 @@
 }
 
 .settings-panel select,
-.settings-panel textarea {
+.settings-panel textarea,
+.settings-panel input[type="number"] {
   width: 100%;
   padding: 12px 14px;
   border: 1px solid var(--border);
@@ -132,6 +133,33 @@
 .settings-panel textarea {
   resize: vertical;
   min-height: 120px;
+}
+
+.range-group {
+  gap: 14px;
+}
+
+.range-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.settings-panel input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.settings-panel input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.settings-panel input[type="number"]::-webkit-outer-spin-button,
+.settings-panel input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .settings-info {

@@ -1,9 +1,22 @@
-function SettingsPanel({ models, selectedModel, onChangeModel, systemPrompt, onChangeSystemPrompt, loading }) {
+function SettingsPanel({
+  models,
+  selectedModel,
+  onChangeModel,
+  systemPrompt,
+  temperature,
+  topP,
+  numPredict,
+  onChangeSystemPrompt,
+  onChangeTemperature,
+  onChangeTopP,
+  onChangeNumPredict,
+  loading,
+}) {
   return (
     <div className="settings-panel">
       <div className="settings-header">
         <h2>설정 패널</h2>
-        <p>모델과 시스템 프롬프트를 선택하세요.</p>
+        <p>모델, 프롬프트, 샘플링 설정을 조정하세요.</p>
       </div>
 
       <div className="settings-group">
@@ -29,9 +42,55 @@ function SettingsPanel({ models, selectedModel, onChangeModel, systemPrompt, onC
         />
       </div>
 
+      <div className="settings-group range-group">
+        <div className="range-label">
+          <span>Temperature</span>
+          <span>{temperature.toFixed(2)}</span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={temperature}
+          onChange={onChangeTemperature}
+          disabled={loading}
+        />
+      </div>
+
+      <div className="settings-group range-group">
+        <div className="range-label">
+          <span>Top P</span>
+          <span>{topP.toFixed(2)}</span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={topP}
+          onChange={onChangeTopP}
+          disabled={loading}
+        />
+      </div>
+
+      <div className="settings-group">
+        <label htmlFor="num-predict">Num Predict</label>
+        <input
+          id="num-predict"
+          type="number"
+          min="1"
+          max="2048"
+          step="1"
+          value={numPredict}
+          onChange={onChangeNumPredict}
+          disabled={loading}
+        />
+      </div>
+
       <div className="settings-info">
         <h3>도움말</h3>
-        <p>이 설정은 FastAPI를 통해 Ollama로 전달됩니다. 모델, 시스템 프롬프트 변경 후 채팅을 보내면 새로운 응답 방향이 반영됩니다.</p>
+        <p>이 설정은 FastAPI를 통해 Ollama로 전달됩니다. 모델, 프롬프트, 샘플링 옵션을 변경한 뒤 채팅을 보내면 새로운 응답 방향이 반영됩니다.</p>
       </div>
     </div>
   )

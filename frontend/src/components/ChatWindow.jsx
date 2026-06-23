@@ -9,10 +9,16 @@ function ChatWindow({
   loading,
   inputValue,
   systemPrompt,
+  temperature,
+  topP,
+  numPredict,
   onInputChange,
   onSubmit,
   onChangeModel,
   onChangeSystemPrompt,
+  onChangeTemperature,
+  onChangeTopP,
+  onChangeNumPredict,
 }) {
   return (
     <div className="chat-window">
@@ -33,7 +39,13 @@ function ChatWindow({
             selectedModel={model}
             onChangeModel={onChangeModel}
             systemPrompt={systemPrompt}
+            temperature={temperature}
+            topP={topP}
+            numPredict={numPredict}
             onChangeSystemPrompt={onChangeSystemPrompt}
+            onChangeTemperature={onChangeTemperature}
+            onChangeTopP={onChangeTopP}
+            onChangeNumPredict={onChangeNumPredict}
             loading={loading}
           />
         </aside>

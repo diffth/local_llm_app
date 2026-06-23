@@ -192,11 +192,13 @@
 }
 
 .message-bubble {
+  position: relative;
   max-width: 78%;
-  padding: 16px 18px;
+  padding: 18px 20px;
   border-radius: 24px;
-  line-height: 1.7;
+  line-height: 1.8;
   word-break: break-word;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
 .message-bubble.user {
@@ -211,6 +213,75 @@
   background: var(--surface-strong);
   color: var(--text);
   border-bottom-left-radius: 6px;
+}
+
+.message-content {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  margin: 16px 0 10px;
+  color: #1f2937;
+}
+
+.markdown-content p {
+  margin: 0 0 14px;
+}
+
+.markdown-content ul {
+  padding-left: 18px;
+  margin: 0 0 14px;
+}
+
+.markdown-content li {
+  margin-bottom: 8px;
+}
+
+.markdown-content code {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: #eef1fb;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+.markdown-content pre {
+  margin: 14px 0;
+  padding: 16px;
+  border-radius: 18px;
+  background: #0f172a;
+  color: #f8fafc;
+  overflow-x: auto;
+}
+
+.markdown-content a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.copy-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(91, 75, 255, 0.12);
+  color: var(--accent-strong);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.copy-button:hover {
+  background: rgba(91, 75, 255, 0.18);
+}
+
+.copy-button:active {
+  transform: translateY(1px);
 }
 
 .chat-footer {

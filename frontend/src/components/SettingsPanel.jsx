@@ -1,7 +1,9 @@
 function SettingsPanel({
   models,
   selectedModel,
+  selectedPromptMode,
   onChangeModel,
+  onChangePromptMode,
   systemPrompt,
   temperature,
   topP,
@@ -28,6 +30,17 @@ function SettingsPanel({
               {model}
             </option>
           ))}
+        </select>
+      </div>
+
+      <div className="settings-group">
+        <label htmlFor="prompt-select">프롬프트 모드</label>
+        <select id="prompt-select" value={selectedPromptMode} onChange={onChangePromptMode} disabled={loading}>
+          <option value="basic">기본 설명 모드</option>
+          <option value="teacher">강사용 설명 모드</option>
+          <option value="code">코드 멘토 모드</option>
+          <option value="troubleshoot">오류 해결 모드</option>
+          <option value="table">표 형식 정리 모드</option>
         </select>
       </div>
 
